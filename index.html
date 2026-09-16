@@ -92,10 +92,10 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
 <header class="hero">
   <span class="eyebrow">安装指引 · Setup Guide</span>
   <h1>虚拟机环境与远程协助<br>安装图文教程</h1>
-  <p class="lede">按顺序完成四步：从 Google Drive 下载全部安装包 → 安装 VirtualBox 6.1.50 → 安装 UU 远程协助 → 取得本机协助 ID 与密码并发给对方。全程约 15 分钟。</p>
+  <p class="lede">按顺序完成五步：从 Google Drive 下载全部安装包 → 安装 VirtualBox 6.1.50 → 安装 UU 远程协助 → 取得本机协助 ID 与密码并发给对方 → 导入虚拟电脑。全程约 20 分钟。</p>
   <div class="meta">
     <span class="chip">适用系统：Windows 10 / 11（64 位）</span>
-    <span class="chip">预计耗时：约 15 分钟</span>
+    <span class="chip">预计耗时：约 20 分钟</span>
     <span class="chip">需要管理员权限</span>
   </div>
 </header>
@@ -107,6 +107,7 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
     <li><a href="#step2">把需要的文件全部下载到电脑</a></li>
     <li><a href="#step3">安装 VirtualBox 6.1.50</a></li>
     <li><a href="#step4">安装 UU 远程协助并获取 ID / 密码</a></li>
+    <li><a href="#step5">在 VirtualBox 中导入虚拟电脑</a></li>
     <li><a href="#faq">常见问题</a></li>
   </ol>
 </nav>
@@ -304,12 +305,18 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
   </div>
   <div class="step-body">
     <ol class="do">
-      <li>双击运行 <code>uuyc_4.39.2.exe</code>，按提示完成安装（可保持默认路径，勾选创建桌面快捷方式）。</li>
-      <li>安装完成后打开 <strong>UU 远程协助</strong>，主界面会显示<strong>本设备</strong>的信息。</li>
-      <li>点击 <strong>开始协助</strong>，程序会生成并显示本机的 <strong>ID</strong> 和 <strong>密码</strong>（验证码）。</li>
-      <li>点击 ID 与密码旁的<strong>复制</strong>按钮，把两项信息一起发送给协助你的人。</li>
-      <li>保持软件开启、电脑不要休眠，等待对方发起连接并在弹窗中点击<strong>允许</strong>。</li>
+      <li>双击运行 <code>uuyc_4.39.2.exe</code>，按提示完成安装（保持默认路径，勾选创建桌面快捷方式）。</li>
+      <li>安装完成后打开 <strong>网易UU远程</strong>，在左侧导航点击 <strong>远程协助 → 开始协助</strong>。</li>
+      <li>确认右上角 <strong>「允许他人远程协助」</strong> 开关处于<strong>打开</strong>状态（蓝色），否则对方无法连入。</li>
+      <li>「本设备」卡片中会显示两项信息：左边是 <strong>本设备 ID</strong>（例如 <code>107 989 550</code>），右边是 <strong>验证码</strong>（例如 <code>SS8247D5</code>）。</li>
+      <li>点击 <strong>「复制并分享」</strong>，ID 与验证码会一起复制到剪贴板，直接粘贴发给协助你的人即可。</li>
+      <li>保持软件开启、电脑不要休眠，等待对方连接。验证方式为「仅使用临时验证码」时，<strong>每次远控结束后验证码会自动刷新</strong>，重连需重新发送。</li>
     </ol>
+
+    <div class="callout tip">
+      <strong>界面对照</strong>
+      验证码默认是隐藏/可刷新的，点击数字旁的 <strong>眼睛图标</strong> 可显示或隐藏；<strong>齿轮图标</strong> 用于切换验证方式（临时验证码 / 固定密码）。下方的「远控伙伴设备」是你去控制别人时才用的，本流程不需要填写。
+    </div>
 
     <figure class="shot" data-shot>
       <img src="images/step-04.png" alt="UU 远程协助主界面，显示本机 ID 与密码">
@@ -341,12 +348,65 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
           <path d="M196 309 L246 309" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4"/>
         </svg>
       </div>
-      <figcaption>图 4　UU 远程协助主界面：ID 与密码的位置，以及「开始协助」按钮（截图替换为 <code>images/step-04.png</code>）</figcaption>
+      <figcaption>图 4　网易UU远程「开始协助」页面：左侧导航、右上角「允许他人远程协助」开关、本设备 ID 与验证码，以及「复制并分享」按钮</figcaption>
     </figure>
 
     <div class="callout warn">
       <strong>安全提醒</strong>
-      ID 与密码仅发给你信任的协助人员，切勿公开发布。协助结束后请关闭 UU 远程协助；密码为一次性验证码，重启软件后会重新生成。
+      设备 ID 与验证码仅发给你信任的协助人员，切勿公开发布或截图到群里。协助结束后请关闭「允许他人远程协助」开关；验证码为临时码，每次远控结束会自动刷新。
+    </div>
+  </div>
+</section>
+
+<!-- STEP 5 -->
+<section class="step" id="step5">
+  <div class="step-head">
+    <div class="num">05</div>
+    <h2 class="step-title">在 VirtualBox 中导入虚拟电脑</h2>
+  </div>
+  <div class="step-body">
+    <p>把下载解压得到的虚拟机文件夹（例如放在 <code>C:\Portable-VM\vm</code>）导入 VirtualBox。这一步通常由远程协助人员操作，你也可以自己完成：</p>
+    <ol class="do">
+      <li>打开 <strong>Oracle VM VirtualBox 管理器</strong>，点击菜单 <strong>管理(F) → 导入虚拟电脑</strong>，或直接点工具栏上的 <strong>「导入」</strong> 图标。</li>
+      <li>在「要导入的虚拟电脑」页面，<strong>来源(S)</strong> 保持 <strong>本地文件系统</strong>。</li>
+      <li>点击 <strong>文件(F)</strong> 输入框右侧的<strong>文件夹图标</strong>，在弹出的「选择一个虚拟电脑文件导入」窗口中定位到虚拟机所在目录，例如 <code>此电脑 › 本地磁盘 (C:) › Portable-VM › vm</code>。</li>
+      <li>选中后缀为 <code>.ovf</code> 的文件（本例为 <strong><code>debian02.ovf</code></strong>），点击 <strong>打开</strong>。</li>
+      <li>回到向导后点击 <strong>下一步</strong>，在设置页可确认 CPU、内存和<strong>虚拟电脑存储位置</strong>（磁盘空间不足时可改到别的盘），一般保持默认即可。</li>
+      <li>点击 <strong>导入</strong>，等待进度条走完。完成后左侧虚拟机列表中会出现新导入的虚拟电脑，选中并点击 <strong>启动</strong> 即可运行。</li>
+    </ol>
+
+    <figure class="shot" data-shot>
+      <img src="images/step-05.png" alt="VirtualBox 导入虚拟电脑向导与选择 .ovf 文件的窗口">
+      <div class="fallback">
+        <svg viewBox="0 0 800 420" role="img" aria-label="VirtualBox 导入虚拟电脑向导示意图">
+          <rect x="24" y="24" width="752" height="372" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="48" y="60" font-size="15" font-weight="700" fill="var(--text)">管理 → 导入虚拟电脑 → 选择 .ovf 文件 → 导入</text>
+          <rect x="48" y="80" width="360" height="200" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="66" y="108" font-size="13" font-weight="700" fill="var(--text)">要导入的虚拟电脑</text>
+          <text x="66" y="136" font-size="12" fill="var(--muted)">来源(S)：本地文件系统</text>
+          <rect x="66" y="150" width="324" height="24" rx="5" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="66" y="196" font-size="12" fill="var(--muted)">文件(F)：</text>
+          <rect x="130" y="182" width="230" height="22" rx="5" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="366" y="182" width="24" height="22" rx="5" fill="var(--accent)"/>
+          <text x="371" y="198" font-size="12" fill="#fff">📁</text>
+          <rect x="300" y="240" width="90" height="26" rx="6" fill="var(--accent)"/>
+          <text x="326" y="258" font-size="12" fill="#fff">下一步</text>
+          <rect x="430" y="120" width="322" height="200" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="448" y="148" font-size="13" font-weight="700" fill="var(--text)">选择一个虚拟电脑文件导入</text>
+          <text x="448" y="172" font-size="12" fill="var(--muted)" font-family="monospace">C: › Portable-VM › vm</text>
+          <rect x="448" y="188" width="286" height="30" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="462" y="208" font-size="13" fill="var(--text)" font-weight="700">debian02.ovf</text>
+          <text x="448" y="244" font-size="12" fill="var(--muted)">类型：Open Virtualization Format</text>
+          <rect x="644" y="276" width="90" height="26" rx="6" fill="var(--accent)"/>
+          <text x="676" y="294" font-size="12" fill="#fff">打开</text>
+        </svg>
+      </div>
+      <figcaption>图 5　导入向导：来源选「本地文件系统」，通过文件夹图标选中 <code>vm</code> 目录下的 <code>debian02.ovf</code></figcaption>
+    </figure>
+
+    <div class="callout warn">
+      <strong>注意</strong>
+      必须选择 <code>.ovf</code> 文件，而不是同目录下的 <code>.vmdk</code> 磁盘文件；两者要保持在同一文件夹内，缺一不可。导入过程会复制磁盘镜像，可能占用数 GB 空间并耗时几分钟，请勿中途关闭窗口。
     </div>
   </div>
 </section>
@@ -362,14 +422,16 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
       <li><strong>打不开 Drive 链接？</strong>确认网络可访问 Google，并已登录被授权的账号；仍不行请联系分享者。</li>
       <li><strong>浏览器提示文件「可能有害」？</strong>这是 Drive 对 .exe 的通用提示，确认来源可信后选择「仍然下载 / 保留」。</li>
       <li><strong>VirtualBox 安装后启动虚拟机报 VT-x 错误？</strong>进入 BIOS 开启虚拟化，并关闭 Hyper-V 与「内核隔离 - 内存完整性」。</li>
-      <li><strong>UU 显示「未连接」或 ID 为空？</strong>检查网络、以管理员身份重新启动 UU，或退出安全软件的拦截。</li>
-      <li><strong>对方连不上？</strong>确认发送的是最新的密码（每次重开会变化），且本机未进入睡眠。</li>
+      <li><strong>UU 里 ID 或验证码显示为空？</strong>检查网络，以管理员身份重新启动 UU，或暂时退出安全软件的拦截。</li>
+      <li><strong>导入时提示校验失败 / 无法打开 OVF？</strong>多为下载或解压不完整，重新下载该虚拟机文件夹并确认 <code>.ovf</code> 与 <code>.vmdk</code> 在同一目录。</li>
+      <li><strong>导入后启动虚拟机黑屏或报错？</strong>同样先检查 BIOS 虚拟化是否开启、Hyper-V 是否已关闭。</li>
+      <li><strong>对方连不上？</strong>确认「允许他人远程协助」开关已打开、发送的是最新验证码（每次远控结束会刷新），且本机未进入睡眠。</li>
     </ul>
   </div>
 </section>
 
 <footer>
-  <p>把真实截图命名为 <code>images/step-01.png</code> ~ <code>images/step-04.png</code> 放入 <code>images/</code> 目录，页面会自动用截图替换示意图。<br>部署：将本文件命名为 <code>index.html</code> 推送到 GitHub 仓库，在 Settings → Pages 中选择分支根目录即可访问。</p>
+  <p>第 4 步已使用真实截图 <code>images/step-04.png</code>；第 5 步已使用真实截图 <code>images/step-05.png</code>；其余步骤把截图命名为 <code>images/step-01.png</code> ~ <code>images/step-03.png</code> 放入 <code>images/</code> 目录即可自动替换示意图。<br>部署：将本文件命名为 <code>index.html</code> 推送到 GitHub 仓库，在 Settings → Pages 中选择分支根目录即可访问。</p>
 </footer>
 
 </div>
