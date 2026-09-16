@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>环境搭建指引</title>
+<meta name="description" content="从 Google Drive 下载安装包，安装 VirtualBox 6.1.50 与 UU 远程协助，并获取协助 ID 与密码的图文步骤。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f0f2f5; --text:#16181d; --muted:#5c6470;
+  --line:#e2e5ea; --accent:#2f6df6; --accent-soft:#e8f0ff; --warn:#b45309; --warn-soft:#fff4e0;
+  --ok:#0f7a52; --ok-soft:#e3f5ec; --shadow:0 1px 2px rgba(16,20,30,.06),0 8px 24px rgba(16,20,30,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1116; --surface:#161a21; --surface-2:#1d222b; --text:#e8eaee; --muted:#9aa3b0;
+    --line:#282e39; --accent:#6f9bff; --accent-soft:#1b2436; --warn:#f0b357; --warn-soft:#2a2113;
+    --ok:#5fd0a0; --ok-soft:#12271f; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1116; --surface:#161a21; --surface-2:#1d222b; --text:#e8eaee; --muted:#9aa3b0;
+  --line:#282e39; --accent:#6f9bff; --accent-soft:#1b2436; --warn:#f0b357; --warn-soft:#2a2113;
+  --ok:#5fd0a0; --ok-soft:#12271f; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px; margin:0 auto; padding:0 16px 96px}
+header.hero{padding:56px 0 28px; border-bottom:1px solid var(--line); margin-bottom:8px}
+.eyebrow{display:inline-block; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  background:var(--accent-soft); border-radius:999px; padding:5px 12px; font-weight:600}
+h1{font-size:clamp(28px,5vw,40px); line-height:1.25; margin:18px 0 10px; letter-spacing:-.02em}
+.lede{color:var(--muted); font-size:17px; margin:0; max-width:62ch}
+.meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px}
+.chip{font-size:13px; color:var(--muted); background:var(--surface); border:1px solid var(--line);
+  border-radius:999px; padding:5px 12px}
+nav.toc{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px;
+  margin:32px 0 8px; box-shadow:var(--shadow)}
+nav.toc h2{font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:0 0 10px}
+nav.toc ol{margin:0; padding-left:20px}
+nav.toc li{margin:6px 0}
+nav.toc a{color:var(--text); text-decoration:none; border-bottom:1px solid transparent}
+nav.toc a:hover{color:var(--accent); border-bottom-color:var(--accent)}
+section.step{margin:44px 0 0; scroll-margin-top:24px}
+.step-head{display:flex; gap:14px; align-items:flex-start}
+.num{flex:0 0 auto; width:38px; height:38px; border-radius:11px; background:var(--accent); color:#fff;
+  display:grid; place-items:center; font-weight:700; font-size:16px; font-variant-numeric:tabular-nums}
+h2.step-title{font-size:23px; margin:4px 0 0; letter-spacing:-.01em}
+.step-body{padding-left:52px}
+@media (max-width:560px){ .step-body{padding-left:0} }
+p{margin:14px 0}
+ol.do,ul.do{margin:14px 0; padding-left:22px}
+ol.do li,ul.do li{margin:8px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.9em;
+  background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:1px 6px}
+a{color:var(--accent); word-break:break-all}
+.shot{margin:22px 0; background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  overflow:hidden; box-shadow:var(--shadow)}
+.shot img{display:block; width:100%; height:auto}
+.shot .fallback{display:none}
+.shot.no-img img{display:none}
+.shot.no-img .fallback{display:block}
+.shot svg{display:block; width:100%; height:auto; background:var(--surface-2)}
+figcaption{font-size:13px; color:var(--muted); padding:10px 14px; border-top:1px solid var(--line)}
+.callout{border-radius:12px; padding:14px 16px; margin:18px 0; font-size:15px; border:1px solid var(--line)}
+.callout strong{display:block; margin-bottom:4px}
+.callout.warn{background:var(--warn-soft); border-color:transparent; color:var(--text)}
+.callout.warn strong{color:var(--warn)}
+.callout.tip{background:var(--ok-soft); border-color:transparent}
+.callout.tip strong{color:var(--ok)}
+.filelist{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:18px 0; background:var(--surface)}
+.filelist div{display:flex; gap:12px; align-items:center; padding:11px 16px; border-top:1px solid var(--line); font-size:15px}
+.filelist div:first-child{border-top:0; background:var(--surface-2); font-size:13px; color:var(--muted); letter-spacing:.06em}
+.filelist .ic{width:22px; text-align:center}
+.copybox{display:flex; gap:10px; align-items:center; background:var(--surface-2); border:1px dashed var(--line);
+  border-radius:10px; padding:12px 14px; margin:16px 0; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:15px}
+footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+.theme-btn{position:fixed; top:14px; right:14px; z-index:9; background:var(--surface); color:var(--text);
+  border:1px solid var(--line); border-radius:999px; padding:7px 14px; font-size:13px; cursor:pointer; box-shadow:var(--shadow)}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" type="button">切换主题</button>
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">安装指引 · Setup Guide</span>
+  <h1>虚拟机环境与远程协助<br>安装图文教程</h1>
+  <p class="lede">按顺序完成四步：从 Google Drive 下载全部安装包 → 安装 VirtualBox 6.1.50 → 安装 UU 远程协助 → 取得本机协助 ID 与密码并发给对方。全程约 15 分钟。</p>
+  <div class="meta">
+    <span class="chip">适用系统：Windows 10 / 11（64 位）</span>
+    <span class="chip">预计耗时：约 15 分钟</span>
+    <span class="chip">需要管理员权限</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#step1">打开 Google Drive 共享文件夹</a></li>
+    <li><a href="#step2">把需要的文件全部下载到电脑</a></li>
+    <li><a href="#step3">安装 VirtualBox 6.1.50</a></li>
+    <li><a href="#step4">安装 UU 远程协助并获取 ID / 密码</a></li>
+    <li><a href="#faq">常见问题</a></li>
+  </ol>
+</nav>
+
+<div class="callout warn">
+  <strong>开始之前</strong>
+  请确认：电脑为 64 位 Windows、磁盘剩余空间不少于 20 GB、已关闭正在运行的杀毒软件拦截提示（安装过程中如有弹窗请选择「允许」）。访问 Google Drive 需要可用的网络环境。
+</div>
+
+<!-- STEP 1 -->
+<section class="step" id="step1">
+  <div class="step-head">
+    <div class="num">01</div>
+    <h2 class="step-title">打开 Google Drive 共享文件夹</h2>
+  </div>
+  <div class="step-body">
+    <p>在浏览器（推荐 Chrome 或 Edge）中打开下面的共享链接：</p>
+    <div class="copybox"><span id="driveUrl">https://drive.google.com/drive/folders/1QWINgoyYnqmS7MevqchDhqRiyb-VBkM2?usp=drive_link</span></div>
+    <ol class="do">
+      <li>若提示登录，请使用自己的 Google 账号登录后再次打开链接。</li>
+      <li>页面正常打开后，中间区域会列出文件夹内的所有安装包文件。</li>
+      <li>如果提示「您需要访问权限 / Request access」，说明账号未被授权，请联系分享者开通权限。</li>
+    </ol>
+
+    <figure class="shot" data-shot>
+      <img src="images/step-01.png" alt="Google Drive 共享文件夹页面截图">
+      <div class="fallback">
+        <svg viewBox="0 0 800 420" role="img" aria-label="浏览器中打开 Google Drive 文件夹的示意图">
+          <rect width="800" height="420" fill="none"/>
+          <rect x="24" y="24" width="752" height="372" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="24" y="24" width="752" height="44" rx="12" fill="var(--surface-2)"/>
+          <circle cx="48" cy="46" r="5" fill="#ff5f57"/><circle cx="66" cy="46" r="5" fill="#febc2e"/><circle cx="84" cy="46" r="5" fill="#28c840"/>
+          <rect x="108" y="34" width="600" height="24" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="122" y="51" font-size="13" fill="var(--muted)" font-family="monospace">drive.google.com/drive/folders/1QWINgoy…</text>
+          <text x="48" y="100" font-size="15" fill="var(--text)" font-weight="700">我的云端硬盘 › 共享文件夹</text>
+          <rect x="48" y="118" width="704" height="30" rx="6" fill="var(--surface-2)"/>
+          <text x="62" y="138" font-size="12" fill="var(--muted)">名称</text>
+          <text x="560" y="138" font-size="12" fill="var(--muted)">文件大小</text>
+          <g font-size="13" fill="var(--text)">
+            <rect x="48" y="156" width="704" height="34" fill="none"/>
+            <rect x="62" y="165" width="16" height="16" rx="3" fill="var(--accent)"/>
+            <text x="92" y="178">VirtualBox-6.1.50-161033-Win.exe</text><text x="560" y="178" fill="var(--muted)">106 MB</text>
+            <rect x="62" y="203" width="16" height="16" rx="3" fill="var(--accent)"/>
+            <text x="92" y="216">uuyc_4.39.2.exe</text><text x="560" y="216" fill="var(--muted)">32 MB</text>
+            <rect x="62" y="241" width="16" height="16" rx="3" fill="var(--accent)"/>
+            <text x="92" y="254">其他随附文件 …</text><text x="560" y="254" fill="var(--muted)">—</text>
+          </g>
+          <line x1="48" y1="194" x2="752" y2="194" stroke="var(--line)"/>
+          <line x1="48" y1="232" x2="752" y2="232" stroke="var(--line)"/>
+          <line x1="48" y1="270" x2="752" y2="270" stroke="var(--line)"/>
+          <rect x="48" y="300" width="230" height="60" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-dasharray="4 4"/>
+          <text x="64" y="326" font-size="13" fill="var(--accent)" font-weight="700">① 确认文件列表已加载</text>
+          <text x="64" y="346" font-size="12" fill="var(--muted)">看到文件名即表示有访问权限</text>
+        </svg>
+      </div>
+      <figcaption>图 1　打开共享链接后应看到的文件列表（把真实截图保存为 <code>images/step-01.png</code> 即可替换此示意图）</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="step" id="step2">
+  <div class="step-head">
+    <div class="num">02</div>
+    <h2 class="step-title">把需要的文件全部下载到电脑</h2>
+  </div>
+  <div class="step-body">
+    <ol class="do">
+      <li>在文件列表空白处点击一下，然后按 <code>Ctrl</code> + <code>A</code> 全选所有文件。</li>
+      <li>在选中的文件上<strong>点击右键 → 下载</strong>（Download）。</li>
+      <li>Google Drive 会先把多个文件打包成一个 <code>.zip</code>，界面右下角显示「正在压缩 / Zipping files」，请耐心等待。</li>
+      <li>浏览器开始下载后，文件默认保存在「下载 / Downloads」文件夹。</li>
+      <li>下载完成后，右键该 zip → <strong>全部解压缩</strong>，解压到一个好找的目录，例如 <code>D:\Setup</code>。</li>
+    </ol>
+
+    <div class="filelist">
+      <div><span class="ic">📁</span><span>解压后应包含以下文件</span></div>
+      <div><span class="ic">📦</span><span><code>VirtualBox-6.1.50-161033-Win.exe</code> — 虚拟机主程序</span></div>
+      <div><span class="ic">📦</span><span><code>uuyc_4.39.2.exe</code> — UU 远程协助客户端</span></div>
+      <div><span class="ic">📄</span><span>其余随附文件（如有说明文档 / 镜像文件，一并保留）</span></div>
+    </div>
+
+    <figure class="shot" data-shot>
+      <img src="images/step-02.png" alt="全选文件并右键下载的截图">
+      <div class="fallback">
+        <svg viewBox="0 0 800 420" role="img" aria-label="全选文件后右键选择下载的示意图">
+          <rect x="24" y="24" width="752" height="372" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="48" y="64" font-size="15" font-weight="700" fill="var(--text)">① Ctrl + A 全选 → ② 右键 → 下载</text>
+          <g>
+            <rect x="48" y="88" width="420" height="34" rx="6" fill="var(--accent-soft)"/>
+            <rect x="48" y="126" width="420" height="34" rx="6" fill="var(--accent-soft)"/>
+            <rect x="48" y="164" width="420" height="34" rx="6" fill="var(--accent-soft)"/>
+            <g font-size="13" fill="var(--text)">
+              <text x="68" y="110">VirtualBox-6.1.50-161033-Win.exe</text>
+              <text x="68" y="148">uuyc_4.39.2.exe</text>
+              <text x="68" y="186">其他随附文件 …</text>
+            </g>
+          </g>
+          <rect x="300" y="150" width="200" height="150" rx="10" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="308" y="186" width="184" height="30" rx="6" fill="var(--accent)"/>
+          <g font-size="13">
+            <text x="322" y="176" fill="var(--muted)">在新窗口中打开</text>
+            <text x="322" y="206" fill="#fff" font-weight="700">下载</text>
+            <text x="322" y="238" fill="var(--muted)">复制到</text>
+            <text x="322" y="268" fill="var(--muted)">重命名</text>
+          </g>
+          <rect x="520" y="300" width="232" height="72" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="538" y="326" font-size="13" fill="var(--text)" font-weight="700">正在压缩文件…</text>
+          <rect x="538" y="338" width="196" height="8" rx="4" fill="var(--line)"/>
+          <rect x="538" y="338" width="128" height="8" rx="4" fill="var(--accent)"/>
+          <text x="538" y="362" font-size="12" fill="var(--muted)">完成后自动开始下载 zip</text>
+        </svg>
+      </div>
+      <figcaption>图 2　全选文件后右键下载，Drive 会打包成 zip（截图替换为 <code>images/step-02.png</code>）</figcaption>
+    </figure>
+
+    <div class="callout tip">
+      <strong>小提示</strong>
+      若 zip 下载失败或速度很慢，可以改为<strong>逐个文件</strong>下载：点中单个文件 → 右键 → 下载，这样更稳定。
+    </div>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section class="step" id="step3">
+  <div class="step-head">
+    <div class="num">03</div>
+    <h2 class="step-title">安装 VirtualBox 6.1.50</h2>
+  </div>
+  <div class="step-body">
+    <p>找到解压出来的 <code>VirtualBox-6.1.50-161033-Win.exe</code>，<strong>右键 → 以管理员身份运行</strong>，然后按下面的顺序操作：</p>
+    <ol class="do">
+      <li>欢迎界面点击 <strong>Next</strong>。</li>
+      <li>安装组件与安装路径保持默认，继续 <strong>Next</strong>。</li>
+      <li>快捷方式选项保持默认，点击 <strong>Next</strong>。</li>
+      <li>出现 <em>Network Interfaces</em> 网络中断警告时，点击 <strong>Yes</strong>（安装网卡驱动会让网络短暂断开，属正常现象）。</li>
+      <li>点击 <strong>Install</strong> 开始安装；期间如弹出「是否安装此设备软件？」，一律选择 <strong>安装 / 允许</strong>。</li>
+      <li>完成后点击 <strong>Finish</strong>，VirtualBox 管理器会自动打开，看到主界面即表示安装成功。</li>
+    </ol>
+
+    <figure class="shot" data-shot>
+      <img src="images/step-03.png" alt="VirtualBox 安装向导截图">
+      <div class="fallback">
+        <svg viewBox="0 0 800 420" role="img" aria-label="VirtualBox 安装向导流程示意图">
+          <rect x="24" y="24" width="752" height="372" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+          <g>
+            <rect x="48" y="60" width="210" height="150" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+            <text x="64" y="88" font-size="13" font-weight="700" fill="var(--text)">Welcome</text>
+            <text x="64" y="112" font-size="12" fill="var(--muted)">Setup Wizard</text>
+            <rect x="180" y="172" width="62" height="24" rx="5" fill="var(--accent)"/>
+            <text x="196" y="188" font-size="12" fill="#fff">Next</text>
+          </g>
+          <g>
+            <rect x="295" y="60" width="210" height="150" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+            <text x="311" y="88" font-size="13" font-weight="700" fill="var(--warn)">⚠ Network Interfaces</text>
+            <text x="311" y="112" font-size="12" fill="var(--muted)">网络将短暂中断</text>
+            <rect x="427" y="172" width="62" height="24" rx="5" fill="var(--accent)"/>
+            <text x="447" y="188" font-size="12" fill="#fff">Yes</text>
+          </g>
+          <g>
+            <rect x="542" y="60" width="210" height="150" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+            <text x="558" y="88" font-size="13" font-weight="700" fill="var(--ok)">✓ Installation Complete</text>
+            <text x="558" y="112" font-size="12" fill="var(--muted)">安装完成</text>
+            <rect x="674" y="172" width="62" height="24" rx="5" fill="var(--accent)"/>
+            <text x="688" y="188" font-size="12" fill="#fff">Finish</text>
+          </g>
+          <path d="M262 135 L291 135" stroke="var(--muted)" stroke-width="2" marker-end="url(#a)"/>
+          <path d="M509 135 L538 135" stroke="var(--muted)" stroke-width="2" marker-end="url(#a)"/>
+          <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="var(--muted)"/></marker></defs>
+          <rect x="48" y="246" width="704" height="120" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="68" y="276" font-size="14" font-weight="700" fill="var(--text)">Oracle VM VirtualBox 管理器</text>
+          <rect x="68" y="292" width="180" height="56" rx="6" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="84" y="316" font-size="12" fill="var(--muted)">左侧：虚拟机列表</text>
+          <text x="84" y="336" font-size="12" fill="var(--muted)">（暂时为空）</text>
+          <rect x="264" y="292" width="468" height="56" rx="6" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="280" y="322" font-size="12" fill="var(--muted)">看到此主界面即表示 VirtualBox 安装成功</text>
+        </svg>
+      </div>
+      <figcaption>图 3　VirtualBox 安装三个关键节点：Next → Yes（网络警告）→ Finish（截图替换为 <code>images/step-03.png</code>）</figcaption>
+    </figure>
+
+    <div class="callout warn">
+      <strong>安装失败怎么办</strong>
+      多数失败来自两点：① BIOS 未开启虚拟化（Intel VT-x / AMD-V），需重启进入 BIOS 打开；② 系统已启用 Hyper-V 或「内存完整性」，与 VirtualBox 6.1 冲突，需在「启用或关闭 Windows 功能」中关掉 Hyper-V / 虚拟机平台后重启。
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section class="step" id="step4">
+  <div class="step-head">
+    <div class="num">04</div>
+    <h2 class="step-title">安装 UU 远程协助，获取本机 ID 与密码</h2>
+  </div>
+  <div class="step-body">
+    <ol class="do">
+      <li>双击运行 <code>uuyc_4.39.2.exe</code>，按提示完成安装（可保持默认路径，勾选创建桌面快捷方式）。</li>
+      <li>安装完成后打开 <strong>UU 远程协助</strong>，主界面会显示<strong>本设备</strong>的信息。</li>
+      <li>点击 <strong>开始协助</strong>，程序会生成并显示本机的 <strong>ID</strong> 和 <strong>密码</strong>（验证码）。</li>
+      <li>点击 ID 与密码旁的<strong>复制</strong>按钮，把两项信息一起发送给协助你的人。</li>
+      <li>保持软件开启、电脑不要休眠，等待对方发起连接并在弹窗中点击<strong>允许</strong>。</li>
+    </ol>
+
+    <figure class="shot" data-shot>
+      <img src="images/step-04.png" alt="UU 远程协助主界面，显示本机 ID 与密码">
+      <div class="fallback">
+        <svg viewBox="0 0 800 420" role="img" aria-label="UU 远程协助主界面示意图：本设备 ID 与密码位置">
+          <rect x="230" y="34" width="340" height="352" rx="14" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="230" y="34" width="340" height="52" rx="14" fill="var(--accent)"/>
+          <text x="256" y="66" font-size="15" fill="#fff" font-weight="700">UU 远程协助</text>
+          <text x="256" y="120" font-size="13" fill="var(--muted)">本设备</text>
+          <rect x="256" y="132" width="288" height="62" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="272" y="156" font-size="12" fill="var(--muted)">您的 ID</text>
+          <text x="272" y="180" font-size="19" fill="var(--text)" font-weight="700" font-family="monospace">123 456 789</text>
+          <rect x="470" y="150" width="58" height="26" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="484" y="168" font-size="12" fill="var(--accent)">复制</text>
+          <rect x="256" y="204" width="288" height="62" rx="10" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="272" y="228" font-size="12" fill="var(--muted)">密码 / 验证码</text>
+          <text x="272" y="252" font-size="19" fill="var(--text)" font-weight="700" font-family="monospace">8 4 2 1 9 3</text>
+          <rect x="470" y="222" width="58" height="26" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="484" y="240" font-size="12" fill="var(--accent)">复制</text>
+          <rect x="256" y="288" width="288" height="42" rx="10" fill="var(--ok)"/>
+          <text x="364" y="315" font-size="15" fill="#fff" font-weight="700">开始协助</text>
+          <text x="256" y="358" font-size="12" fill="var(--muted)">把上面的 ID 和密码发给对方即可建立连接</text>
+          <g stroke="var(--accent)" stroke-width="2" fill="none" stroke-dasharray="5 4">
+            <path d="M600 163 L560 163"/><path d="M600 235 L560 235"/>
+          </g>
+          <text x="606" y="167" font-size="12" fill="var(--accent)" font-weight="700">① 复制 ID</text>
+          <text x="606" y="239" font-size="12" fill="var(--accent)" font-weight="700">② 复制密码</text>
+          <text x="84" y="315" font-size="12" fill="var(--accent)" font-weight="700">③ 点击开始协助</text>
+          <path d="M196 309 L246 309" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4"/>
+        </svg>
+      </div>
+      <figcaption>图 4　UU 远程协助主界面：ID 与密码的位置，以及「开始协助」按钮（截图替换为 <code>images/step-04.png</code>）</figcaption>
+    </figure>
+
+    <div class="callout warn">
+      <strong>安全提醒</strong>
+      ID 与密码仅发给你信任的协助人员，切勿公开发布。协助结束后请关闭 UU 远程协助；密码为一次性验证码，重启软件后会重新生成。
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="step" id="faq">
+  <div class="step-head">
+    <div class="num">?</div>
+    <h2 class="step-title">常见问题</h2>
+  </div>
+  <div class="step-body">
+    <ul class="do">
+      <li><strong>打不开 Drive 链接？</strong>确认网络可访问 Google，并已登录被授权的账号；仍不行请联系分享者。</li>
+      <li><strong>浏览器提示文件「可能有害」？</strong>这是 Drive 对 .exe 的通用提示，确认来源可信后选择「仍然下载 / 保留」。</li>
+      <li><strong>VirtualBox 安装后启动虚拟机报 VT-x 错误？</strong>进入 BIOS 开启虚拟化，并关闭 Hyper-V 与「内核隔离 - 内存完整性」。</li>
+      <li><strong>UU 显示「未连接」或 ID 为空？</strong>检查网络、以管理员身份重新启动 UU，或退出安全软件的拦截。</li>
+      <li><strong>对方连不上？</strong>确认发送的是最新的密码（每次重开会变化），且本机未进入睡眠。</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>把真实截图命名为 <code>images/step-01.png</code> ~ <code>images/step-04.png</code> 放入 <code>images/</code> 目录，页面会自动用截图替换示意图。<br>部署：将本文件命名为 <code>index.html</code> 推送到 GitHub 仓库，在 Settings → Pages 中选择分支根目录即可访问。</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  document.querySelectorAll('[data-shot] img').forEach(function(img){
+    function fail(){ img.closest('[data-shot]').classList.add('no-img'); }
+    img.addEventListener('error', fail);
+    if (img.complete && img.naturalWidth === 0) fail();
+  });
+  var btn = document.getElementById('themeBtn');
+  btn.addEventListener('click', function(){
+    var dark = matchMedia('(prefers-color-scheme: dark)').matches;
+    var cur = document.documentElement.getAttribute('data-theme') || (dark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  });
+})();
+</script>
+</body>
+</html>
