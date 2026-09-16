@@ -128,7 +128,7 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
     <div class="copybox"><span id="driveUrl">https://drive.google.com/drive/folders/1QWINgoyYnqmS7MevqchDhqRiyb-VBkM2?usp=drive_link</span></div>
     <ol class="do">
       <li>若提示登录，请使用自己的 Google 账号登录后再次打开链接。</li>
-      <li>页面正常打开后，中间区域会列出文件夹内的所有安装包文件。</li>
+      <li>页面正常打开后，中间区域会列出 <strong>1 个文件夹</strong>（<code>debian</code>，虚拟机文件）和 <strong>2 个安装程序</strong>（UU 远程、VirtualBox）。</li>
       <li>如果提示「您需要访问权限 / Request access」，说明账号未被授权，请联系分享者开通权限。</li>
     </ol>
 
@@ -163,7 +163,7 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
           <text x="64" y="346" font-size="12" fill="var(--muted)">看到文件名即表示有访问权限</text>
         </svg>
       </div>
-      <figcaption>图 1　打开共享链接后应看到的文件列表（把真实截图保存为 <code>images/step-01.png</code> 即可替换此示意图）</figcaption>
+      <figcaption>图 1　打开共享链接后应看到的内容：一个 <code>debian</code> 文件夹和两个安装程序</figcaption>
     </figure>
   </div>
 </section>
@@ -180,14 +180,15 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
       <li>在选中的文件上<strong>点击右键 → 下载</strong>（Download）。</li>
       <li>Google Drive 会先把多个文件打包成一个 <code>.zip</code>，界面右下角显示「正在压缩 / Zipping files」，请耐心等待。</li>
       <li>浏览器开始下载后，文件默认保存在「下载 / Downloads」文件夹。</li>
-      <li>下载完成后，右键该 zip → <strong>全部解压缩</strong>，解压到一个好找的目录，例如 <code>D:\Setup</code>。</li>
+      <li>下载完成后，右键该 zip → <strong>全部解压缩</strong>，解压到一个好找的目录，例如 <code>C:\Portable-VM</code>。</li>
+      <li>确认 <code>debian</code> 文件夹已完整解压出来（里面应有 <code>.ovf</code> 和体积较大的 <code>.vmdk</code> 文件），三项内容合计约 200 MB 以上，请等全部下载完成再操作。</li>
     </ol>
 
     <div class="filelist">
-      <div><span class="ic">📁</span><span>解压后应包含以下文件</span></div>
-      <div><span class="ic">📦</span><span><code>VirtualBox-6.1.50-161033-Win.exe</code> — 虚拟机主程序</span></div>
-      <div><span class="ic">📦</span><span><code>uuyc_4.39.2.exe</code> — UU 远程协助客户端</span></div>
-      <div><span class="ic">📄</span><span>其余随附文件（如有说明文档 / 镜像文件，一并保留）</span></div>
+      <div><span class="ic">📁</span><span>共享文件夹内的全部内容（三项都要下载）</span></div>
+      <div><span class="ic">📁</span><span><code>debian</code> — 虚拟机文件夹，内含 <code>.ovf</code> 与 <code>.vmdk</code>，第 5 步导入时使用</span></div>
+      <div><span class="ic">📦</span><span><code>uuyc_4.39.2.exe</code> — UU 远程协助客户端，约 86.4 MB</span></div>
+      <div><span class="ic">📦</span><span><code>VirtualBox-6.1.50-161033-Win.exe</code> — 虚拟机主程序，约 106.6 MB</span></div>
     </div>
 
     <figure class="shot" data-shot>
@@ -431,7 +432,7 @@ footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--line); colo
 </section>
 
 <footer>
-  <p>第 4 步  已使用真实截图 <code>images/step-04.png</code>；第 5 步已使用真实截图 <code>images/step-05.png</code>；其余步骤把截图命名为 <code>images/step-01.png</code> ~ <code>images/step-03.png</code> 放入 <code>images/</code> 目录即可自动替换示意图。<br>部署：将本文件命名为 <code>index.html</code> 推送到 GitHub 仓库，在 Settings → Pages 中选择分支根目录即可访问。</p>
+  <p>第 1 步、第 4 步已使用真实截图 <code>images/step-01.png</code> 与 <code>images/step-04.png</code>；第 5 步已使用真实截图 <code>images/step-05.png</code>；其余步骤把截图命名为 <code>images/step-02.png</code>、<code>images/step-03.png</code> 放入 <code>images/</code> 目录即可自动替换示意图。<br>部署：将本文件命名为 <code>index.html</code> 推送到 GitHub 仓库，在 Settings → Pages 中选择分支根目录即可访问。</p>
 </footer>
 
 </div>
